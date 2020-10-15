@@ -15,7 +15,6 @@ const App = () => (<>
             <Route path='/mypage' component={UserDetail}/>
             <Route path='/modifying-user-info' component={UserModify}/>
             <Route path='/membership-withdrawal' component={UserWithdrawal}/>
-            <Route path='/signup-form' component={UserRegister}/>
             <Route path='/item' component={Item}></Route>
             <Route path='/board' component={Board}></Route>
         </Switch>
