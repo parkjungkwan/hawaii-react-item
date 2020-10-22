@@ -7,9 +7,12 @@ const UserLogin = () => {
     const [password, setPassword] = useState()
     const login = e => {
         e.preventDefault()
-        axios.post(`http:localhost:8080/user/login`, {userid, password})
+        axios.post(`http://localhost:8080/api/access`, {userid, password})
             .then(res => {
-                alert('Success !')
+                
+                let data = JSON.stringify(res)
+                let a = data['data']
+                alert(`${a} connection success ! `)
             })
             .catch(error => {
                 alert('Fail')
