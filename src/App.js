@@ -8,7 +8,7 @@ import {Home, User, Article, Item} from './templates'
 import { createStore, applyMiddleware, combineReducers} from 'redux'
 import {Provider} from'react-redux'
 import {itemReducer } from './container/item/ItemList'
-import {ItemChatBot} from "./container/item"
+
 import ReduxThunk from 'redux-thunk'
 const rootReducer = combineReducers({
     itemReducer
@@ -17,7 +17,6 @@ const rootReducer = combineReducers({
 const App = () => (<>
 
     <Router>
-        <ItemChatBot>
         <Nav/>
         <Switch>
             <Provider store = {createStore(rootReducer, applyMiddleware(ReduxThunk))}>
@@ -43,7 +42,6 @@ const App = () => (<>
                 <Route path='/write-article' component={WriteArticle}></Route>
             </Provider>,    
         </Switch>
-        </ItemChatBot>
     </Router>
 </>)
 

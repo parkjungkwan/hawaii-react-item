@@ -4,5 +4,6 @@ table, th, tr, td {
   }
 
 .tab_layer {
-    width: 1000px
+    width: 500px;
+   
 }

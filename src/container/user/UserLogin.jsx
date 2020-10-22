@@ -7,8 +7,7 @@ const UserLogin = () => {
     const [password, setPassword] = useState()
     const login = e => {
         e.preventDefault()
-        alert(`로그인 아이디: ${userid}, 비번 ${password}`)    
-        axios.post(``, {userid, password})
+        axios.post(`http:localhost:8080/user/login`, {userid, password})
             .then(res => {
                 alert('Success !')
             })
@@ -22,8 +21,9 @@ const UserLogin = () => {
 
     }
     return (<User>
-    <h1>로그인</h1>
-    <table>
+    <h1>로그인</h1> <form>
+    <table  className='tab_layer'>
+       
         <tr>
             <td>ID : </td>
             <td><input type="text" onChange={e => setUserid(`${e.target.value}`)}/></td>
@@ -33,12 +33,13 @@ const UserLogin = () => {
             <td> <input type="text" onChange={e => setPassword(`${e.target.value}`)}/> </td>
         </tr>
         <tr>
-            <td colSpan='2'>
+            <td colspan={2}>
                 <input type="button" value="LOGIN" onClick= {login}/>
                 <input type="button" value="CANCEL" onClick= {cancel}/>
             </td>
         </tr>
-    </table>
+       
+    </table> </form>
     </User>)
     }
 export default UserLogin

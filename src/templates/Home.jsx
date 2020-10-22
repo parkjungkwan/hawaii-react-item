@@ -1,7 +1,8 @@
 import React from 'react'
 import './table.style.css'
 import axios from 'axios'
-const Home = () => {
+import {ItemChatBot} from "../container/item"
+const Home = ({children}) => {
     
     const test = () => {
         axios.get(`http://localhost:8080/api`)
@@ -20,6 +21,8 @@ const Home = () => {
         <tr><td><button onClick={test}>Connection Test</button></td></tr>
 
         </table>
+        {children}
+        <ItemChatBot/>
 </>)}
 
 export default Home
