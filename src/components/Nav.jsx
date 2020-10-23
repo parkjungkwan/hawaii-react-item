@@ -8,9 +8,7 @@ const Nav = props => {
         alert('logout')
         e.preventDefault();
         sessionStorage.removeItem("sessionUser")
-        let sessionUser = sessionStorage.getItem('sessionUser')
-        alert('>>>>>>'+sessionUser)
-        history.push('/welcome')
+        history.push('/')
         window.location.reload()
     }
     
