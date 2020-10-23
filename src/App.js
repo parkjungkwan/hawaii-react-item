@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import {Nav} from './components'
 import {ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './container/item'
-import {UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal} from './container/user'
+import {UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal, UserList} from './container/user'
 import {ArticleList, EditArticle, ReadArticle, RemoveArticle, WriteArticle} from './container/article'
 import {Home, User, Article, Item} from './templates'
 import { createStore, applyMiddleware, combineReducers} from 'redux'
@@ -31,6 +31,7 @@ export default function App(){
                 <Route path='/mypage' component={UserDetail}/>
                 <Route path='/modifying-user-info' component={UserModify}/>
                 <Route path='/membership-withdrawal' component={UserWithdrawal}/>
+                <Route path='/userlist' component={UserList}/>
                 <Route path='/item' component={Item}></Route>
                 <Route path='/item-list' component={ItemList}/>
                 <Route path='/item-detail' component={ItemDetail}/>
