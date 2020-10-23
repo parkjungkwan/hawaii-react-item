@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {User} from '../../templates'
 import axios from 'axios'
 
 const UserRegister = () => {
@@ -26,7 +25,7 @@ const UserRegister = () => {
     }
 
     
-    return (<User>
+    return (<>
         <h1>UserRegister</h1><form>
         <table className='tab_layer'>
             
@@ -68,7 +67,7 @@ const UserRegister = () => {
                 </tr>
             
         </table></form>
-    </User>)
+    </>)
 }
 
 export default UserRegister

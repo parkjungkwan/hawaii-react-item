@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import {Nav} from './components'
 import {ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './container/item'
@@ -14,14 +14,17 @@ const rootReducer = combineReducers({
     itemReducer
 })
 
-const App = () => (<>
-
+export default function App(){
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
+    return (<>
     <Router>
-        <Nav/>
+        <Nav isAuth = {loggedIn}/>
+        <hr/>
+        <main>
         <Switch>
             <Provider store = {createStore(rootReducer, applyMiddleware(ReduxThunk))}>
-                <Route path='/home' component={Home}></Route>
-                <Redirect exact from = {'/'} to={'/home'}/>
+                <Route exact path='/' component={Home}></Route>
+                <Redirect from = {'/home'} to={'/'}/> 
                 <Route path='/user' component={User}></Route>
                 <Route path='/signup-form' component={UserRegister}/>
                 <Route path='/signin-form' component={UserLogin}/>
@@ -42,7 +45,6 @@ const App = () => (<>
                 <Route path='/write-article' component={WriteArticle}></Route>
             </Provider>,    
         </Switch>
+        </main>
     </Router>
-</>)
-
-export default App
+</>)}

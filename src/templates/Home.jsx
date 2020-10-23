@@ -1,9 +1,8 @@
 import React from 'react'
 import './table.style.css'
-import axios from 'axios'
 import {ItemChatBot} from "../container/item"
-const Home = ({children}) => {
-    
+import axios from 'axios'
+export default function Home(props){ 
     const test = () => {
         axios.get(`http://localhost:8080/api`)
             .then(res => {
@@ -14,15 +13,9 @@ const Home = ({children}) => {
                 e => alert(`Failure`)
             )
     }
-    
     return(<>
-        <table className='tab_layer'>
-        <tr><td><h1>Home</h1></td></tr>
-        <tr><td><button onClick={test}>Connection Test</button></td></tr>
-
-        </table>
-        {children}
-        <ItemChatBot/>
-</>)}
-
-export default Home
+           <table className='tab_layer'><tr><td><h1>Home</h1></td></tr>
+            <tr><td><button onClick={test}>Connection Test</button></td></tr></table>   
+            <ItemChatBot/>    
+            </>)
+}

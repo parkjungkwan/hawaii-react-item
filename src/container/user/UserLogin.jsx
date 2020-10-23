@@ -1,21 +1,26 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {User} from '../../templates'
+import { Link, useHistory } from "react-router-dom";
 
 const UserLogin = () => {
-    const [userid, setUserid] = useState()
-    const [password, setPassword] = useState()
+    const [userid, setUserid] = useState('')
+    const [password, setPassword] = useState('')
+    
+    const history = useHistory();
     const login = e => {
         e.preventDefault()
         axios.post(`http://localhost:8080/api/access`, {userid, password})
             .then(res => {
+                alert(`Welcome ! ${res.data["name"]}.  ${res.data["userid"]}'s connection is successful. ! `)
+
+                sessionStorage.setItem("sessionUser", res.data['userid']);
+                window.location.reload()
+                history.push("/home");
                 
-                let data = JSON.stringify(res)
-                let a = data['data']
-                alert(`${a} connection success ! `)
             })
             .catch(error => {
-                alert('Fail')
+                alert("Please check your ID or password.");
+                window.location.reload();
             })
 
     }
@@ -23,8 +28,8 @@ const UserLogin = () => {
         e.preventDefault()
 
     }
-    return (<User>
-    <h1>로그인</h1> <form>
+    return (<>
+    <h1>Signin Form</h1> <form>
     <table  className='tab_layer'>
        
         <tr>
@@ -43,6 +48,6 @@ const UserLogin = () => {
         </tr>
        
     </table> </form>
-    </User>)
+    </>)
     }
 export default UserLogin
