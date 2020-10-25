@@ -1,6 +1,7 @@
 import React , {useEffect, useState} from 'react'
 import axios from 'axios'
 import {User} from '../../templates'
+import {Link} from 'react-router-dom'
 
 const UserList = () => {
     const [data, setData] = useState([])
@@ -32,7 +33,7 @@ const UserList = () => {
             </tr>
             {data.map((i, index)=>(
                 <tr key={index}>
-                <td>{i.userid}</td>
+                <td><Link to=''>{i.userid}</Link></td>
                 <td>{i.name}</td>
                 <td>{i.pclass}</td>
                 <td>{i.gender}</td>
