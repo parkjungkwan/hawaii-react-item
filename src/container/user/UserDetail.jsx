@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {User} from '../../templates'
 import axios from 'axios'
-const UserDetail = () => {
+export default function UserDetail() {
     const detail = e => {
         e.preventDefault()
         axios.get(`http:localhost:8080/user/detail`)
@@ -57,5 +57,3 @@ const UserDetail = () => {
         </table></form>
     </User>)
 }
-
-export default UserDetail
