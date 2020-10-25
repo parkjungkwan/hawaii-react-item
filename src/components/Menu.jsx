@@ -12,7 +12,7 @@ export const UserMenu = () => (<nav>
 
 export const ArticleMenu = () =>(<nav>
     <ol>
-        <li><Link to='/write-article'>Writing Article Form</Link></li> 
+        <li><Link to='/article-write-form'>Writing Article Form</Link></li> 
         <li><Link to='/article-list'>Article List</Link></li> 
         <li><Link to='/edit-article'>Update Article Form</Link></li> 
         <li><Link to='/delete-article'>Delete Article Form</Link></li> 

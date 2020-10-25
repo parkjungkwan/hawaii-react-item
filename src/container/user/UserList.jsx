@@ -2,7 +2,7 @@ import React , {useEffect, useState} from 'react'
 import axios from 'axios'
 import {User} from '../../templates'
 
-const UserList = () => {
+export default function UserList(){
     const [data, setData] = useState([])
     useEffect(() => {
         axios.get(`http://localhost:8080/api/users`)
@@ -46,5 +46,3 @@ const UserList = () => {
 
     </User>)
 }
-
-export default UserList

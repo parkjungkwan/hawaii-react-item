@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 
-const UserLogin = () => {
+export default function UserLogin() {
     const [userid, setUserid] = useState('')
     const [password, setPassword] = useState('')
     
@@ -49,5 +49,4 @@ const UserLogin = () => {
        
     </table> </form>
     </>)
-    }
-export default UserLogin
+ }
