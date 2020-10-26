@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import {Nav} from './components'
-import {ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './container/item'
-import {UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal, UserList} from './container/user'
-import {ArticleList, EditArticle, ReadArticle, RemoveArticle, ArticleWriteForm} from './container/article'
+import {ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './containers/item'
+import {UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal, UserList} from './containers/user'
+import {ArticleList, EditArticle, ReadArticle, RemoveArticle, ArticleWriteForm} from './containers/article'
 import {Home, User, Article, Item} from './templates'
 import { createStore, applyMiddleware, combineReducers} from 'redux'
 import {Provider} from'react-redux'
-import {itemReducer } from './container/item/ItemList'
+import {itemReducer } from './containers/item/ItemList'
 
 import ReduxThunk from 'redux-thunk'
 const rootReducer = combineReducers({

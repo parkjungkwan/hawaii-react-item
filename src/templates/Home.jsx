@@ -1,6 +1,6 @@
 import React from 'react'
 import './table.style.css'
-import {ItemChatBot} from "../container/item"
+import {ItemChatBot} from "../containers/item"
 import axios from 'axios'
 export default function Home(props){ 
     const test = () => {
