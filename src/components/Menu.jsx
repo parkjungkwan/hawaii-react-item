@@ -25,6 +25,7 @@ export const ItemMenu = () => (<nav>
         <li><Link to='/register-item'>Register Item</Link></li>
         <li><Link to='/modify-item'>Modify Item</Link></li>
         <li><Link to='/remove-item'>Remove Item</Link></li>
+        <li><Link to='/cabbage-price-predict'>Cabbage Price Predict</Link></li>
     </ol>
 </nav>)
 

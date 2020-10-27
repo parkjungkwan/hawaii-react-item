@@ -7,11 +7,11 @@ import {ArticleList, EditArticle, ReadArticle, RemoveArticle, ArticleWriteForm} 
 import {Home, User, Article, Item} from './templates'
 import { createStore, applyMiddleware, combineReducers} from 'redux'
 import {Provider} from'react-redux'
-import {itemReducer } from './containers/item/ItemList'
+import {Cabbage } from './containers/item'
 
 import ReduxThunk from 'redux-thunk'
 const rootReducer = combineReducers({
-    itemReducer
+    
 })
 
 export default function App(){
@@ -44,6 +44,7 @@ export default function App(){
                 <Route path='/read-article' component={ReadArticle}></Route>
                 <Route path='/remove-article' component={RemoveArticle}></Route>
                 <Route path='/article-write-form' component={ArticleWriteForm}></Route>
+                <Route path='/cabbage-price-predict' component={Cabbage}></Route>
             </Provider>,    
         </Switch>
         </main>
