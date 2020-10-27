@@ -17,11 +17,22 @@ export default function UserList(){
         })
 
     },[])
+
+    const search = e => {
+        alert(`Key Value: ${document.getElementById('search').value}`)
+        axios.get(`http://localhost:8080/api/user/${document.getElementById('search').value}`)
+        .then(res => { 
+            alert(`Success`)
+        })
+        .catch( e => { alert(`Search ...`) })
+    }
     
     return (<User>
   
         <table>
             <h1>User List</h1>
+            Search ID : <input type="text" id='search'/> 
+            <button onClick={search}>Search</button>
             <tr>
                 <th>userid</th>
                 <th>name</th>
