@@ -8,7 +8,6 @@ import {Home, User, Article, Item} from './templates'
 import { createStore, applyMiddleware, combineReducers} from 'redux'
 import {Provider} from'react-redux'
 import {Cabbage } from './containers/item'
-
 import ReduxThunk from 'redux-thunk'
 const rootReducer = combineReducers({
     

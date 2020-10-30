@@ -1,10 +1,11 @@
 import React from 'react'
 import './table.style.css'
 import {ItemChatBot} from "../containers/item"
+import {context as c} from '../context'
 import axios from 'axios'
 export default function Home(props){ 
     const test = () => {
-        axios.get(`http://localhost:8080/api`)
+        axios.get(`${c.url}/api`)
             .then(res => {
                 alert(`Connection Success !!`)
             }

@@ -1,51 +1,148 @@
-import React , {useEffect, useState} from 'react'
+import React , {useCallback, useEffect, useState} from 'react'
 import axios from 'axios'
 import {User} from '../../templates'
-import {Link} from 'react-router-dom'
-
+import {context as c} from '../../context'
 export default function UserList(){
     const [data, setData] = useState([])
-    useEffect(() => {
-        axios.get(`http://localhost:8080/api/users`)
-        .then(res=>{
-            alert(`List Success`)
+    const bulk = useCallback(async e =>{
+        e.preventDefault()
+        try {
+            const req = {
+                method: c.get,
+                url: `${c.url}/api/users`
+            }
+            const res = await axios(req)
+        } catch (error) {
+            
+        }
+    }, [])
+    const count = useCallback(async e =>{
+        e.preventDefault()
+        try {
+            const req = {
+                method: c.get,
+                url: `${c.url}/api/users`,
+            }
+            const res = await axios(req)
+        } catch (error) {
+            
+        }
+    }, [])
+    const save = useCallback(async e => {
+        e.preventDefault()
+        
+        try {
+            const req = {
+                method: c.post,
+                url: `${c.url}/api/user`,
+                data: {},
+                auth: c.auth
+            }
+            const res = await axios(req)
+        } catch (error) {
+            
+        }
+    }, []) 
+
+    const update = useCallback(async e => {
+        e.preventDefault()
+        try {
+            const req = {
+                method: c.put,
+                url: `${c.url}/api/user`,
+                data: {},
+                auth: c.auth
+            }
+            const res = await axios(req)
+        } catch (error) {
+            
+        }
+    }, [])
+
+    const remove = useCallback(async e => {
+        e.preventDefault()
+        try {
+            const req = {
+                method: c.delete,
+                url: `${c.url}/api/user`,
+                data: {},
+                auth: c.auth
+            }
+            const res = await axios(req)   
+        } catch (error) {
+            
+        }
+    }, [])
+
+    const fetchAllUsers = useCallback(async () => {
+        try{
+            const req = {
+                method: c.get, 
+                url: `${c.url}/api/users`
+            }
+            const res = await axios(req)   
             setData(res.data)
-        })
-        .catch(e=>{
-            alert(`List Failure`)
-            throw(e)
-        })
-
+        }catch(error){
+            alert(`fetchAllUsers failure`)
+            throw(error)
+        }
+    },[]) 
+    useEffect(() => {fetchAllUsers()},[])
+    
+    const fetchSomeUsers = useCallback(async e=>{
+        e.preventDefault()
+        try {
+            const req = {
+                method: c.get,
+                url: `${c.url}/api/users`,
+                data: {params: e.target.getAttribute('userId')},
+                auth: c.auth
+            }
+            const res = await axios(req)   
+        } catch (error) {
+            alert(`fetchSomeUsers failure`)
+            throw(error)
+        }
     },[])
-
-    const search = e => {
-        alert(`Key Value: ${document.getElementById('search').value}`)
-        axios.get(`http://localhost:8080/api/user/${document.getElementById('search').value}`)
-        .then(res => { 
-            alert(`Success`)
-        })
-        .catch( e => { alert(`Search ...`) })
-    }
+    const fetchOneUser = useCallback(async e => {
+        e.preventDefault()
+        try {
+            alert(`Search ...1`) 
+            const id = e.target.getAttribute('userId')
+            const req = {
+                method: c.get,
+                url: `${c.url}/api/user/${id}`,
+                auth: c.auth
+            }
+            alert(`Search ..2.`) 
+            const res = await axios(req)   
+            alert(`${res.data}`) 
+        } catch (error) {
+            const res = error.response
+            console.log(`Error ${res}`) 
+        }
+    },[])
+    
     
     return (<User>
   
         <table>
             <h1>User List</h1>
             Search ID : <input type="text" id='search'/> 
-            <button onClick={search}>Search</button>
+            <button onClick={fetchSomeUsers}>Search</button>
             <tr>
-                <th>userid</th>
-                <th>name</th>
-                <th>pclass</th>
-                <th>gender</th>
-                <th>age_group</th>
-                <th>embarked</th>
-                <th>rank</th>
+                <th>User Id</th>
+                <th>Name</th>
+                <th>Pclass</th>
+                <th>Gender</th>
+                <th>Age Group</th>
+                <th>Embarked</th>
+                <th>Rank</th>
             </tr>
             {data.map((i, index)=>(
                 <tr key={index}>
-                <td><Link to=''>{i.userid}</Link></td>
-                <td>{i.name}</td>
+                <td>{i.user_id}</td>
+                <td userId={i.user_id} onClick={fetchOneUser}>{i.name}</td>
                 <td>{i.pclass}</td>
                 <td>{i.gender}</td>
                 <td>{i.age_group}</td>
