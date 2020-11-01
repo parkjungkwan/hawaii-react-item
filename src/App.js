@@ -1,17 +1,16 @@
-import React, {useState} from 'react'
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-import {Nav} from './components'
-import {ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './containers/item'
-import {UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal, UserList} from './containers/user'
-import {ArticleList, EditArticle, ReadArticle, RemoveArticle, ArticleWriteForm} from './containers/article'
-import {Home, User, Article, Item} from './templates'
-import { createStore, applyMiddleware, combineReducers} from 'redux'
-import {Provider} from'react-redux'
-import {Cabbage } from './containers/item'
+import React, { useState } from 'react'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Nav } from './components'
+import { ItemDetail, ItemList, ModifyItem, RegisterItem, RemoveItem } from './containers/item'
+import { UserRegister, UserLogin, UserDetail, UserModify, UserWithdrawal, UserList } from './containers/user'
+import { ArticleList, EditArticle, ReadArticle, RemoveArticle, ArticleWriteForm } from './containers/article'
+import rootReducer from './modules'
+import { Home, User, Article, Item} from './templates'
+import { Provider } from'react-redux'
+import { Cabbage } from './containers/item'
 import ReduxThunk from 'redux-thunk'
-const rootReducer = combineReducers({
-    
-})
+
 
 export default function App(){
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
@@ -27,7 +26,7 @@ export default function App(){
                 <Route path='/user' component={User}></Route>
                 <Route path='/signup-form' component={UserRegister}/>
                 <Route path='/signin-form' component={UserLogin}/>
-                <Route path='/mypage' component={UserDetail}/>
+                <Route path='/user-detail' component={UserDetail}/>
                 <Route path='/modifying-user-info' component={UserModify}/>
                 <Route path='/membership-withdrawal' component={UserWithdrawal}/>
                 <Route path='/userlist' component={UserList}/>

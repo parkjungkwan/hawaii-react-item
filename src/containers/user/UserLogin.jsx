@@ -1,29 +1,42 @@
-import React, {useState} from 'react'
+import React , {useCallback, useState} from 'react'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
-
+// import {context as c} from '../../context'
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from '../../modules/user.reducer'
 export default function UserLogin() {
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
-    
+    const dispatch = useDispatch()
     const history = useHistory();
-    const login = e => {
+    /*
+    async e => {
         e.preventDefault()
-        axios.post(`http://localhost:8080/api/access`, {userId, password})
-            .then(res => {
-                alert(`Welcome ! ${res.data["name"]}.  ${res.data["userId"]}'s connection is successful. ! `)
-
-                sessionStorage.setItem("sessionUser", res.data['userId']);
-                window.location.reload()
-                history.push("/home");
-                
-            })
-            .catch(error => {
-                alert("Please check your ID or password.");
-                window.location.reload();
-            })
-
+        alert(userId)
+        try {
+            const req = {
+                method: c.post,
+                url: `${c.url}/api/access`,
+                data: {userId, password},
+                auth: c.auth
+            }
+            const res = await axios(req)
+            const data = JSON.parse(res.data)
+            alert(`Welcome ! ${data.name}'s connection is successful. ! `)
+            sessionStorage.setItem("sessionUser", data.name);
+            window.location.reload()
+            history.push("/home");
+        } catch (error) {
+            alert("Please check your ID or password.");
+            window.location.reload();
+        }
     }
+    */
+    const login = e => { 
+        e.preventDefault()
+        dispatch(loginAction(userId,password))
+    }
+    
     const cancel = e => {
         e.preventDefault()
 

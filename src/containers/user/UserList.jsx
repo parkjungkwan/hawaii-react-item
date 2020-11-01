@@ -1,9 +1,12 @@
-import React , {useCallback, useEffect, useState} from 'react'
+import React , { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
-import {User} from '../../templates'
-import {context as c} from '../../context'
+import { User } from '../../templates'
+import { context as c } from '../../context'
 export default function UserList(){
-    const [data, setData] = useState([])
+    const [user, setUser] = useState({})
+    const [users, setUsers] = useState([])
+    const history = useHistory()
     const bulk = useCallback(async e =>{
         e.preventDefault()
         try {
@@ -81,7 +84,7 @@ export default function UserList(){
                 url: `${c.url}/api/users`
             }
             const res = await axios(req)   
-            setData(res.data)
+            setUsers(res.data)
         }catch(error){
             alert(`fetchAllUsers failure`)
             throw(error)
@@ -107,19 +110,21 @@ export default function UserList(){
     const fetchOneUser = useCallback(async e => {
         e.preventDefault()
         try {
-            alert(`Search ...1`) 
-            const id = e.target.getAttribute('userId')
+            
+            const userId = e.target.getAttribute('userId')
+            console.log(`Search Id is ${userId}`) 
             const req = {
                 method: c.get,
-                url: `${c.url}/api/user/${id}`,
+                url: `${c.url}/api/user/${userId}`,
                 auth: c.auth
             }
-            alert(`Search ..2.`) 
             const res = await axios(req)   
-            alert(`${res.data}`) 
+            const data = JSON.parse(res.data)
+            setUser(data)
+            console.log(`${data.name}`) 
+            history.push("/user-detail");
         } catch (error) {
-            const res = error.response
-            console.log(`Error ${res}`) 
+            console.log(`Error ${error}`) 
         }
     },[])
     
@@ -139,7 +144,7 @@ export default function UserList(){
                 <th>Embarked</th>
                 <th>Rank</th>
             </tr>
-            {data.map((i, index)=>(
+            {users.map((i, index)=>(
                 <tr key={index}>
                 <td>{i.user_id}</td>
                 <td userId={i.user_id} onClick={fetchOneUser}>{i.name}</td>

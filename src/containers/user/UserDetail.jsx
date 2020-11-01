@@ -1,18 +1,8 @@
 import React, {useState} from 'react'
 import {User} from '../../templates'
-import axios from 'axios'
+import { useEffect } from 'react'
 export default function UserDetail() {
-    const detail = e => {
-        e.preventDefault()
-        axios.get(`http:localhost:8080/user/detail`)
-        .then(
-
-        )
-        .error(
-            
-        )
-
-    }
+   const detail = () =>{}
     return (<User>
         <h1>UserDetail</h1>
         <form>
