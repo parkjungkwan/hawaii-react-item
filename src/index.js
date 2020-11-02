@@ -27,7 +27,7 @@ const store = createStore(
 
 
 ReactDOM.render(
-  <Router history={customHistory}>
+  <Router history={ customHistory }>
     <Provider store={store}>
     <App />
     </Provider>

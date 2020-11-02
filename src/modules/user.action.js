@@ -1,9 +1,9 @@
-import { moveTo } from '../context'
+import { goToHome } from '../context'
 import { userService } from './user.service'
 import { alertActions } from './alert.action'
 // Action Types
 
-
+import { history } from '../context';
 export const userConstants = {
   REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
   REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
@@ -23,22 +23,46 @@ export const userConstants = {
   DELETE_SUCCESS: 'USERS_DELETE_SUCCESS',
   DELETE_FAILURE: 'USERS_DELETE_FAILURE'    
 }
-let user = JSON.parse(sessionStorage.getItem("user"));
-let users = JSON.parse(localStorage.getItem('users')) || [];
+// let user = JSON.parse(sessionStorage.getItem("user"));
+// let users = JSON.parse(localStorage.getItem('users')) || [];
 
 
 
 // Initial State
 
-export const initialState = user
-? { isLoggedIn: true, user }
-: { isLoggedIn: false, user: null };
+export const initialState = { 
+    isLoggedIn: false, 
+    user: {} 
+}
+
 
 
 
 // Reducer
-export function userReducer(state = {}, action) {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case userConstants.REGISTER_REQUEST:
+        return { registering: true };
+    case userConstants.REGISTER_SUCCESS:
+        return {};
+    case userConstants.REGISTER_FAILURE:
+        return {};
+    case userConstants.LOGIN_REQUEST:
+        return {
+            isloggedIn: true,
+            user: action.user
+        };
+    case userConstants.LOGIN_SUCCESS:
+        console.log(` [Reducer] Login User Name is ${action.user.name}`) 
+        return {
+            ...state,
+            isloggedIn: true,
+            user: action.user
+        }
+    case userConstants.LOGIN_FAILURE:
+        return {};
+    case userConstants.LOGOUT:
+        return {};
       case userConstants.GETALL_REQUEST:
           return {
               loading: true
@@ -49,6 +73,7 @@ export function userReducer(state = {}, action) {
           };
       case userConstants.GETALL_FAILURE:
           return {
+                ...state,
               error: action.error
           };
       case userConstants.DELETE_REQUEST:
@@ -88,40 +113,6 @@ export function userReducer(state = {}, action) {
 
 
 
-export function authentication(state = initialState, action) {
-    switch (action.type) {
-        case userConstants.LOGIN_REQUEST:
-            return {
-                loggingIn: true,
-                user: action.user
-            };
-        case userConstants.LOGIN_SUCCESS:
-            return {
-                loggedIn: true,
-                user: action.user
-            };
-        case userConstants.LOGIN_FAILURE:
-            return {};
-        case userConstants.LOGOUT:
-            return {};
-        default:
-            return state
-    }
-}
-
-export function registration(state = {}, action) {
-  switch (action.type) {
-      case userConstants.REGISTER_REQUEST:
-          return { registering: true };
-      case userConstants.REGISTER_SUCCESS:
-          return {};
-      case userConstants.REGISTER_FAILURE:
-          return {};
-      default:
-          return state
-  }
-}
-
 // Actions
 
 
@@ -135,15 +126,18 @@ export const userActions = {
   delete: _delete
 };
 
-function login(username, password, from) {
+export function login(userId, password){
   return dispatch => {
-      dispatch(request({ username }));
+      dispatch(request({ userId }));
 
-      userService.login(username, password)
+      userService.login(userId, password)
           .then(
               user => { 
-                  dispatch(success(user));
-                  moveTo(from);
+                  console.log(user.name)
+                  dispatch(success(user))
+                  history.push('/user-detail')
+                  // window.location.reload()
+
               },
               error => {
                   dispatch(failure(error.toString()));
@@ -153,7 +147,10 @@ function login(username, password, from) {
   };
 
   function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-  function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+  function success(user) { 
+    console.log(`#2 Login User Name is ${user.name}`) 
+      return { type: userConstants.LOGIN_SUCCESS, user } 
+  }
   function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
@@ -170,7 +167,7 @@ function register(user) {
           .then(
               user => { 
                   dispatch(success());
-                  moveTo('/login');
+                  //moveTo('/login');
                   dispatch(alertActions.success('Registration successful'));
               },
               error => {
@@ -254,7 +251,7 @@ export const getById = () => (dispatch) => {
   return userService.getById().then(
     resp => { 
       alert(`UserService.detail()`)
-      dispatch(moveTo('/home'))
+      //dispatch(moveTo('/home'))
     },
     error => {alert(`Error`)}
   )

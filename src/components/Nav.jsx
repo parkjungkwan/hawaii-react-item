@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
+import { history } from '../context';
 
 const Nav = props => { 
     
@@ -14,7 +15,7 @@ const Nav = props => {
     
     return (<>
         <nav style={{width: '500px', margin: '0 auto'}}>
-            { props.isAuth === null
+            { props.isAuth !== null
             ? <ul>
                 <li><Link to='/home'>Home</Link></li>
                 <li><Link to='/user'>User</Link></li>
@@ -23,6 +24,7 @@ const Nav = props => {
                 <li onClick={logout} style={{textDecoration:'underline'}}>Logout</li>
             </ul>:
             <ul>
+                {/* <li><Link to='/signup-form'>Register</Link></li> */}
                 <li><Link to='/signup-form'>Register</Link></li>
                 <li><Link to='/signin-form'>Login</Link></li>
                 <li><Link to='/'>Cancel</Link></li>

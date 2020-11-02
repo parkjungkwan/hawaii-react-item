@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 // import {context as c} from '../../context'
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from '../../modules/user.action'
-export default function UserLogin() {
+export default function UserLogin(){
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
