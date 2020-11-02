@@ -14,7 +14,7 @@ const Nav = props => {
     
     return (<>
         <nav style={{width: '500px', margin: '0 auto'}}>
-            { props.isAuth !== null
+            { props.isAuth === null
             ? <ul>
                 <li><Link to='/home'>Home</Link></li>
                 <li><Link to='/user'>User</Link></li>

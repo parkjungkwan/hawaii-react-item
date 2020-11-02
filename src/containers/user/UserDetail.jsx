@@ -1,8 +1,14 @@
 import React, {useState} from 'react'
 import {User} from '../../templates'
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
+import { userDetailAction } from '../../modules/user.reducer'
 export default function UserDetail() {
-   const detail = () =>{}
+    const dispatch = useDispatch()
+    const detail = e =>{
+            e.preventDefault()
+            dispatch(userDetailAction())
+    }
     return (<User>
         <h1>UserDetail</h1>
         <form>
@@ -41,6 +47,7 @@ export default function UserDetail() {
                     <td><input type="text" /></td>
                 </tr>
                 <tr>
+                    {/* <td colspan={2}><button onClick={() => dispatch(goToHome())}>Update Info</button> */}
                     <td colspan={2}><button onClick={detail}>Update Info</button>
                     <button>취소</button></td>
                 </tr>

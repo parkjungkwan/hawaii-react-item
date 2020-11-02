@@ -8,7 +8,6 @@ export default function UserLogin() {
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-    const history = useHistory();
     /*
     async e => {
         e.preventDefault()

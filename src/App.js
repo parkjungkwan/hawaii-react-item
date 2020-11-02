@@ -10,18 +10,13 @@ import { Home, User, Article, Item} from './templates'
 import { Provider } from'react-redux'
 import { Cabbage } from './containers/item'
 import ReduxThunk from 'redux-thunk'
-import { createBrowserHistory as history } from 'history'
-
+import history from './history';
 export default function App(){
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
     return (<>
-    <Router>
-        <Nav isAuth = {loggedIn}/>
-        <hr/>
-        <main>
-        <Switch>
-            <Provider store = {createStore(rootReducer, applyMiddleware(ReduxThunk))}>
-                <Router history={history}>
+      
+                <Nav isAuth = {loggedIn}/>
+                <Switch>
                     <Route exact path='/' component={Home}></Route>
                     <Redirect from = {'/home'} to={'/'}/> 
                     <Route path='/user' component={User}></Route>
@@ -44,9 +39,6 @@ export default function App(){
                     <Route path='/remove-article' component={RemoveArticle}></Route>
                     <Route path='/article-write-form' component={ArticleWriteForm}></Route>
                     <Route path='/cabbage-price-predict' component={Cabbage}></Route>
-                </Router>
-            </Provider>    
-        </Switch>
-        </main>
-    </Router>
+                    </Switch>
+       
 </>)}
