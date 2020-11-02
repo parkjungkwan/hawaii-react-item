@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 // import {context as c} from '../../context'
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from '../../modules/user.reducer'
+import { userActions } from '../../modules/user.action'
 export default function UserLogin() {
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
@@ -31,15 +31,7 @@ export default function UserLogin() {
         }
     }
     */
-    const login = e => { 
-        e.preventDefault()
-        dispatch(loginAction(userId,password))
-    }
-    
-    const cancel = e => {
-        e.preventDefault()
 
-    }
     return (<>
     <h1>Signin Form</h1> <form>
     <table  className='tab_layer'>
@@ -54,8 +46,8 @@ export default function UserLogin() {
         </tr>
         <tr>
             <td colspan={2}>
-                <input type="button" value="LOGIN" onClick= {login}/>
-                <input type="button" value="CANCEL" onClick= {cancel}/>
+                <input type="button" value="LOGIN" onClick= {e => dispatch(userActions.login(userId,password))}/>
+                <input type="button" value="CANCEL" onClick= {e => alert(`Cancel`)}/>
             </td>
         </tr>
        

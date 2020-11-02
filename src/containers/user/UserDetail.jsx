@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import {User} from '../../templates'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
-import { userDetailAction } from '../../modules/user.reducer'
+import { getById, userDetailAction } from '../../modules/user.action'
 export default function UserDetail() {
     const dispatch = useDispatch()
     const detail = e =>{
             e.preventDefault()
-            dispatch(userDetailAction())
+            dispatch(getById())
     }
     return (<User>
         <h1>UserDetail</h1>

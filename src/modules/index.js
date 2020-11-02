@@ -1,4 +1,4 @@
-import userReducer  from './user.reducer'
+import userReducer  from './user.action'
 import { combineReducers } from 'redux'
 const rootReducer = combineReducers({
     userReducer
