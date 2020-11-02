@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { context as c } from '../context'
+import { history } from '../history'
 // Action Types
 import { Link, useHistory } from "react-router-dom";
 export const SIGNUP_SUCCESS= 'SIGNUP_SUCCESS'
@@ -37,14 +38,15 @@ const userReducer = (state = initialState, action) => {
 // const history = useHistory()
 export const loginAction = (userId, password) => (dispatch) => {
     return UserService.login(userId, password).then(
-      data => {
-        dispatch({type: LOGIN_SUCCESS,payload: { user: data }})
-        //history.push('/user-detail')
+      resp => {
+        console.log(`[ Login Response ] `)
+        // dispatch({type: LOGIN_SUCCESS,payload: { user: data }})
+        history.push('/user-detail')
         
-        return Promise.resolve();
+        // return Promise.resolve();
       },
       error =>{
-        alert(error)
+        console.error(`[ After Login Action ] ${error}`)
       }
     )
 }
@@ -58,11 +60,11 @@ const UserService = {
     const req = {
         method: c.post,
         url: `${c.url}/api/access`,
-        data: {userId, password},
+        data: {id:userId, password:password},
         auth: c.auth
     }
     const res = await axios(req)
-    const data = JSON.parse(res.data)
+    const data = res.data
     alert(`Welcome ! ${data.name}'s connection is successful. ! `)
     return data
   }
