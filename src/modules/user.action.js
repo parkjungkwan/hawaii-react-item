@@ -29,8 +29,7 @@ export const userConstants = {
 export const loginSuccess = createAction(userConstants.LOGIN_SUCCESS);
 
 // Initial State
-
-export const initialState = {number: 7}
+const initialState = {user: {}, loggingIn: false}
 
 /*
 const counterReducer = handleActions(
@@ -45,12 +44,8 @@ const counterReducer = handleActions(
 
 // Reducer
 const userReducer = handleActions(
-    {
-      [userConstants.LOGIN_SUCCESS]: (state, action) => { 
-          alert(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ${state.number}`)
-        return ({ number: 9 })},
-      
-    },
+    { [userConstants.LOGIN_SUCCESS]: (state, action) =>
+         ({ loggingIn: true, user: action.user }) },
     initialState,
   )
 /*
@@ -145,8 +140,6 @@ export function login(userId, password){
                   console.log(user.name)
                   dispatch(success(user))
                   history.push('/user-detail')
-                  //window.location.reload()
-
               },
               error => {
                   dispatch(failure(error.toString()));
