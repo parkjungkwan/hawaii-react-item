@@ -1,73 +1,102 @@
 import React, {useState} from 'react'
-import axios from 'axios'
-
+import { userActions } from '../../modules/user.action'
+import { useDispatch, useSelector } from "react-redux";
 const UserRegister = () => {
-    const [userid, setUserid] = useState()
-    const [password, setPassword] = useState()
-    const [name, setName] = useState()
-    const [pclass, setPclass] = useState()
-    const [gender, setGender] = useState()
-    const [birthYear, setBirthYear] = useState()
-    const [embarked, setEmbarked] = useState()
 
-    const register = e => {
-        e.preventDefault()
-        axios.post(`http:localhost:8080/user/register`,  {
-            userid,password,name,pclass,gender,birthYear,embarked
-        })
-        .then(
-            console.log(`signup SUCCESS`)
-        )
-        .error(
-            console.log(`signup FAIL`)
-        )
+    const [user, setUser] = useState({
+        userid: '',
+        password: '',
+        name: '',
+        pclass: '',
+        gender: '',
+        embarked: ''
+    });
+    const [submitted, setSubmitted] = useState(false);
+    const registering = useSelector(state => state.registration.registering);
+    const dispatch = useDispatch();
 
+    // reset login status
+    /*
+    useEffect(() => {
+        dispatch(userActions.logout());
+    }, [])
+    */
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setUser(user => ({ ...user, [name]: value }));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        setSubmitted(true);
+        if (user.userid && user.password && user.name) {
+            dispatch(userActions.register(user));
+        }
     }
 
     
-    return (<>
-        <h1>UserRegister</h1><form>
+    return (<User>
+        <h1>UserRegister</h1>
+        <form name="form" onSubmit={handleSubmit}>
         <table className='tab_layer'>
             
                 <tr>
                     <td>ID</td>
-                    <td><input type="text" onChange={e => setUserid(e.target.value)}/></td>
+                    <td>
+                        <input type="text" name="userId" value={user.userId} onChange={handleChange} 
+                        className={'form-control' + (submitted && !user.userId ? ' is-invalid' : '')} />
+                        {submitted && !user.firstName &&
+                            <div className="invalid-feedback">User ID is required</div>
+                        }
+
+                    </td>
                 </tr>
                 <tr>
-                    <td>PASSWORD</td>
-                    <td><input type="text" onChange={e => setPassword(e.target.value)}/></td>
+                    <td>Password</td>
+                    <td>
+                        <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
+                        {submitted && !user.password &&
+                            <div className="invalid-feedback">Password is required</div>
+                        }
+                    </td>
                 </tr>
                 <tr>
-                    <td>NAME</td>
-                    <td><input type="text" onChange={e => setName(e.target.value)}/></td>
+                    <td>Name</td>
+                    <td>
+                        <input type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
+                        {submitted && !user.name &&
+                            <div className="invalid-feedback">User Name is required</div>
+                        }
+
+                    </td>
                 </tr>
                 <tr>
-                    <td>PCLASS</td>
-                    <td><input type="text" onChange={e => setPclass(e.target.value)}/></td>
+                    <td>Pclass</td>
+                    <td>
+                        <input type="text" name="pclass" value={user.pclass} onChange={handleChange}  />
+                    </td>
                 </tr>
                 <tr>
-                    <td>GENDER</td>
-                    <td><input type="text" onChange={e => setGender(e.target.value)}/></td>
+                    <td>Gender</td>
+                    <td>
+                        <input type="text" name="gender" value={user.gender} onChange={handleChange} />
+                    </td>
                 </tr>
                 <tr>
-                    <td>BIRTH YEAR</td>
-                    <td><input type="text" onChange={e => setBirthYear(e.target.value)}/></td>
+                    <td>Embarked</td>
+                    <td>
+                        <input type="text" name="password" value={user.password} onChange={handleChange} />
+                    </td>
                 </tr>
                 <tr>
-                    <td>EMBARKED</td>
-                    <td><input type="text" onChange={e => setEmbarked(e.target.value)}/></td>
-                </tr>
-                {/* <tr>
-                    <td>RANK</td> 
-                    <td>Do not enter ratings..</td>
-                </tr> */}
-                <tr>
-                    <td colspan={2}><button onClick={register}>Register</button>
+                    <td colspan={2}><button onClick={userActions.register}>Register</button>
                     <button>Cancel</button></td>
                 </tr>
             
         </table></form>
-    </>)
+    </User>)
 }
 
 export default UserRegister

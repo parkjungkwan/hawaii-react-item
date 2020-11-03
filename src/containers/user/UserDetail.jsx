@@ -2,16 +2,11 @@ import React, {useState} from 'react'
 import {User} from '../../templates'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
-import { getById, userDetailAction } from '../../modules/user.action'
+import { userActions } from '../../modules/user.action'
 export default function UserDetail() {
     const dispatch = useDispatch()
     const user = useSelector(state => (state.userReducer.user))
-    console.log(`[Login Check] ${user.name}`)
-    const detail = e =>{
-            e.preventDefault()
-            dispatch(getById())
-    }
-   
+    
     return (<User>
         <h1>UserDetail</h1>
         <form>
@@ -50,8 +45,9 @@ export default function UserDetail() {
                     <td>{user.rank}</td>
                 </tr>
                 <tr>
-                    <td colspan={2}><button onClick={detail}>Update Info</button>
-                    <button>취소</button></td>
+                    <td colspan={2}><button onClick={dispatch(userActions.goToDest('/modifying-user-info'))}>
+                        Go Update</button>
+                    <button>Cancel</button></td>
                 </tr>
         </table></form>
     </User>)

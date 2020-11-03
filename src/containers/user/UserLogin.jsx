@@ -1,15 +1,13 @@
 import React , {useCallback, useState} from 'react'
-import axios from 'axios'
-import { Link, useHistory } from "react-router-dom";
-// import {context as c} from '../../context'
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from '../../modules/user.action'
+
 export default function UserLogin(){
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
     
-    return (<>
+    return (<User>
     <h1>Signin Form</h1> <form>
     <table  className='tab_layer'>
        
@@ -29,5 +27,5 @@ export default function UserLogin(){
         </tr>
        
     </table> </form>
-    </>)
+    </User>)
  }

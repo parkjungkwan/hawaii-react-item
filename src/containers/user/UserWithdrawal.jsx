@@ -1,20 +1,8 @@
-import React, {useState} from 'react'
-import {User} from '../../templates'
-import axios from 'axios'
+import React, { useState } from 'react'
+import { User } from '../../templates'
+import { userActions } from '../../modules'
+
 const UserWithdrawal = () => {
-    const [password, setPassword] = useState()
-    const withdrawal = e => {
-        e.preventDefault()
-        axios.post(`http:localhost:8080/user/withdrawal`, {password})
-        .then(
-            console.log(`signup SUCCESS`)
-        )
-        .error(
-            console.log(`signup FAIL`)
-        )
-
-    }
-
     
     return (<User>
         <h1>UserWithdrawal</h1>
@@ -24,7 +12,7 @@ const UserWithdrawal = () => {
                 <td> <input type="text" onChange={e => setPassword(`${e.target.value}`)}/> </td>
             </tr>
             <tr>
-                <td colSpan={2}><button onClick={withdrawal}>Withdrawal</button></td>
+                <td colSpan={2}><button onClick={e => userActions.remove()}>Withdrawal</button></td>
             </tr>
         </table>
     </User>)

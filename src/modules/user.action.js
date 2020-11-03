@@ -23,98 +23,23 @@ export const userConstants = {
   DELETE_SUCCESS: 'USERS_DELETE_SUCCESS',
   DELETE_FAILURE: 'USERS_DELETE_FAILURE'    
 }
-// let user = JSON.parse(sessionStorage.getItem("user"));
-// let users = JSON.parse(localStorage.getItem('users')) || [];
+let sessionUser = JSON.parse(sessionStorage.getItem("user"));
 
 export const loginSuccess = createAction(userConstants.LOGIN_SUCCESS);
 
 // Initial State
-const initialState = {user: {}, loggingIn: false}
+const initialState = {
+    user: {}, 
+    loggingIn: false
+}
 
-/*
-const counterReducer = handleActions(
-  {
-    [INCREASE]: (state, action) => ({ number: state.number + 1 }),
-    [DECREASE]: (state, action) => ({ number: state.number - 1 }),
-  },
-  initialState,
-)
 
-*/
 
 // Reducer
 const userReducer = handleActions(
-    { [userConstants.LOGIN_SUCCESS]: (state, action) =>
-         ({ loggingIn: true, user: action.user }) },
+    { [userConstants.LOGIN_SUCCESS]: (state, action) => ({ loggingIn: true, user: action.user }) },
     initialState,
   )
-/*
-export const userReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case userConstants.REGISTER_REQUEST:
-        return { registering: true };
-    case userConstants.REGISTER_SUCCESS:
-        return {};
-    case userConstants.REGISTER_FAILURE:
-        return {};
-    case userConstants.LOGIN_REQUEST:
-        return state = false
-    case userConstants.LOGIN_SUCCESS:
-        //console.log(` [Reducer] Login User Name is ${action.user.name}`) 
-        console.log(` [Reducer] Login User Name is >>>>>>>>>>>>>>>>>>>>`) 
-        return {test:true}
-    case userConstants.LOGIN_FAILURE:
-        return {};
-    case userConstants.LOGOUT:
-        return {};
-    case userConstants.GETALL_REQUEST:
-        return {
-            loading: true
-        };
-    case userConstants.GETALL_SUCCESS:
-        return {
-            items: action.users
-        };
-    case userConstants.GETALL_FAILURE:
-        return {
-            ...state,
-            error: action.error
-        };
-    case userConstants.DELETE_REQUEST:
-        // add 'deleting:true' property to user being deleted
-        return {
-            ...state,
-            items: state.items.map(user =>
-                user.id === action.id
-                    ? { ...user, deleting: true }
-                    : user
-            )
-        };
-    case userConstants.DELETE_SUCCESS:
-        // remove deleted user from state
-        return {
-            items: state.items.filter(user => user.id !== action.id)
-        };
-    case userConstants.DELETE_FAILURE:
-        // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
-        return {
-            ...state,
-            items: state.items.map(user => {
-                if (user.id === action.id) {
-                    // make copy of user without 'deleting:true' property
-                    const { deleting, ...userCopy } = user;
-                    // return copy of user with 'deleteError:[error]' property
-                    return { ...userCopy, deleteError: action.error };
-                }
-
-                return user;
-            })
-        };
-    default:
-        return state
-  }
-}
-*/
 
 
 // Actions
@@ -123,30 +48,58 @@ export const userReducer = (state = initialState, action) => {
 
 
 export const userActions = {
-  login,
-  logout,
-  register,
-  getAll,
-  delete: _delete
-};
+  
+  register, login, logout, update, remove,
+  getAll, getById, getByOption, goToDest, 
+}
 
-export function login(userId, password){
-  return dispatch => {
-      dispatch(request({ userId }));
+///////////////////////////////////////
+///////////////////////////////////////
+//////////////    POST   //////////////
+///////////////////////////////////////
+///////////////////////////////////////
 
-      userService.login(userId, password)
-          .then(
-              user => { 
-                  console.log(user.name)
-                  dispatch(success(user))
-                  history.push('/user-detail')
-              },
-              error => {
-                  dispatch(failure(error.toString()));
-                  dispatch(alertActions.error(error.toString()));
-              }
-          );
-  };
+function register(user) {
+    return dispatch => {
+        dispatch(request(user));
+  
+        userService.register(user)
+            .then(
+                user => { 
+                    dispatch(success());
+                    
+                    dispatch(alertActions.success('Registration successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+  
+    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
+    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+}
+
+
+function login(userId, password){
+    return dispatch => {
+        dispatch(request({ userId }))
+
+        userService.login(userId, password)
+            .then(
+                user => { 
+                    console.log(user.name)
+                    dispatch(success(user))
+                    history.push('/user-detail')
+             },
+            error => {
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            }
+          )
+    }
 
   function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
   function success(user) { 
@@ -157,108 +110,137 @@ export function login(userId, password){
 }
 
 function logout() {
-  userService.logout();
-  return { type: userConstants.LOGOUT };
+    userService.logout();
+    return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
-  return dispatch => {
-      dispatch(request(user));
+function update() {
+    userService.update();
+    return { type: userConstants.LOGOUT };
+  }
 
-      userService.register(user)
-          .then(
-              user => { 
-                  dispatch(success());
-                  //moveTo('/login');
-                  dispatch(alertActions.success('Registration successful'));
-              },
-              error => {
-                  dispatch(failure(error.toString()));
-                  dispatch(alertActions.error(error.toString()));
-              }
-          );
-  };
+function remove(id) {
+    return dispatch => {
+        dispatch(request(id));
+  
+        userService.delete(id)
+            .then(
+                user => dispatch(success(id)),
+                error => dispatch(failure(id, error.toString()))
+            );
+    };
+  
+    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
+    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
+    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+  }
 
-  function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-  function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-  function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
-}
 
-function getAll() {
-  return dispatch => {
-      dispatch(request());
 
-      userService.getAll()
-          .then(
-              users => dispatch(success(users)),
-              error => dispatch(failure(error.toString()))
-          );
-  };
 
-  function request() { return { type: userConstants.GETALL_REQUEST } }
-  function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-  function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
-}
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  return dispatch => {
-      dispatch(request(id));
-
-      userService.delete(id)
-          .then(
-              user => dispatch(success(id)),
-              error => dispatch(failure(id, error.toString()))
-          );
-  };
-
-  function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-  function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-  function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
-}
-/*
-export const login = (userId, password) => (dispatch) => {
-    return userService.login(userId, password).then(
-      resp => {
-        console.log(`[ Login Response ] `)
-        // dispatch({type: LOGIN_SUCCESS,payload: { user: data }})
-        moveTo('/user-detail')
-        
-        // return Promise.resolve();
-      },
-      error =>{
-        console.error(`[ After Login Action ] ${error}`)
-      }
-    )
-}
+///////////////////////////////////////
+///////////////////////////////////////
+//////////////    GET   //////////////
+///////////////////////////////////////
+///////////////////////////////////////
 
 
 function getAll() {
     return dispatch => {
         dispatch(request());
-  
+
         userService.getAll()
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
             );
     };
-  
+
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
-  }
-*/  
-export const getById = () => (dispatch) => {
-  return userService.getById().then(
-    resp => { 
-      alert(`UserService.detail()`)
-      //dispatch(moveTo('/home'))
-    },
-    error => {alert(`Error`)}
-  )
 }
-
-
-
+function getById() {
+    return  dispatch => {
+        userService.getById().then(
+        resp => { 
+            
+        },
+        error => {alert(`Error`)}
+        )
+  }
+}
+function goToDest(dest) {history.push(dest)}
+function bulk(){
+    return dispatch => {
+        userService.bulk().then(
+            resp => {},
+            error => {}
+        )
+    }
+}
+function count (){
+    return dispatch => {
+        userService.count().then(
+            resp => {},
+            error => {}
+        )
+    }
+}
+function getByOption(){
+    return dispathc => {
+        
+    }
+}
+/*
+const fetchAllUsers = useCallback(async () => {
+    try{
+        const req = {
+            method: c.get, 
+            url: `${c.url}/api/users`
+        }
+        const res = await axios(req)   
+        setUsers(res.data)
+    }catch(error){
+        alert(`fetchAllUsers failure`)
+        throw(error)
+    }
+},[]) 
+const fetchSomeUsers = useCallback(async e=>{
+    e.preventDefault()
+    try {
+        const req = {
+            method: c.get,
+            url: `${c.url}/api/users`,
+            data: {params: e.target.getAttribute('userId')},
+            auth: c.auth
+        }
+        const res = await axios(req)   
+    } catch (error) {
+        alert(`fetchSomeUsers failure`)
+        throw(error)
+    }
+},[])
+const fetchOneUser = useCallback(async e => {
+    e.preventDefault()
+    try {
+        
+        const userId = e.target.getAttribute('userId')
+        console.log(`Search Id is ${userId}`) 
+        const req = {
+            method: c.get,
+            url: `${c.url}/api/user/${userId}`,
+            auth: c.auth
+        }
+        const res = await axios(req)   
+        const data = JSON.parse(res.data)
+        setUser(data)
+        console.log(`${data.name}`) 
+        history.push("/user-detail");
+    } catch (error) {
+        console.log(`Error ${error}`) 
+    }
+},[])
+*/
 export default userReducer
