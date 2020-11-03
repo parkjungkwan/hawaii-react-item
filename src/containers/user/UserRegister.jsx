@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { userActions } from '../../modules/user.action'
 import { useDispatch, useSelector } from "react-redux";
+import { User } from '../../templates'
+
 const UserRegister = () => {
 
     const [user, setUser] = useState({

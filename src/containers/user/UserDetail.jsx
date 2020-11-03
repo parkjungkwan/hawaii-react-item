@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {User} from '../../templates'
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react'
 import { userActions } from '../../modules/user.action'
+
 export default function UserDetail() {
     const dispatch = useDispatch()
     const user = useSelector(state => (state.userReducer.user))

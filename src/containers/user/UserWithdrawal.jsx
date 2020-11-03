@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { User } from '../../templates'
-import { userActions } from '../../modules'
+import { userActions } from '../../modules/user.action'
 
 const UserWithdrawal = () => {
     
@@ -9,7 +9,7 @@ const UserWithdrawal = () => {
         <table  className='tab_layer'>
             <tr>
                 <td> Enter PW : </td>
-                <td> <input type="text" onChange={e => setPassword(`${e.target.value}`)}/> </td>
+                <td> <input type="text" /> </td>
             </tr>
             <tr>
                 <td colSpan={2}><button onClick={e => userActions.remove()}>Withdrawal</button></td>

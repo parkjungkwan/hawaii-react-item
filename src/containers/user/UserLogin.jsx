@@ -1,7 +1,7 @@
 import React , {useCallback, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from '../../modules/user.action'
-
+import { User } from '../../templates'
 export default function UserLogin(){
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
