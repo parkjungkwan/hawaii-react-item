@@ -23,7 +23,8 @@ export const itemSearch = () => dispatch => {
 }
 
 
-const ItemList = () => {
+export default function AirportContainer(){
+
     const [loading , setLoading] = useState(false)
     const [resultAvailable, setResult] = useState(false)
     const [selected, setSelected] = useState(false)
@@ -120,4 +121,3 @@ const ItemList = () => {
         </div>
     </Item>)
 }
-export default ItemList

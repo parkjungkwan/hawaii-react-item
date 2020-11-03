@@ -11357,6 +11357,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
+simple-react-router-redux@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/simple-react-router-redux/-/simple-react-router-redux-0.2.3.tgz#deb92e8d3a1ed926b1993744b7146d57b52ca59a"
+  integrity sha512-9T06r32XsoNbQRp1CaUkdQ58pbQMb/kSeIjozmXBwH5iWBYXjcaDzZEsy0N7JO95fQqHnMe98tabq377yOrgwA==
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/simple-swizzle/-/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"

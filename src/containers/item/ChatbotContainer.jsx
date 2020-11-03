@@ -18,8 +18,8 @@ export const ItemSearch2 = () => {
 
 }
 
-const ItemChatBot = () => (
-    <ChatBot
+export default function ChatBotContainer(){
+    return (<ChatBot
         floating = {true}
         headerTitle = {'서비스'}
         enableSmoothScroll = {true}
@@ -79,6 +79,4 @@ const ItemChatBot = () => (
             },
         ]}
     />
-);
-
-export default ItemChatBot;
+)}

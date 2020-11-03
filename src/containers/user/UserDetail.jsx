@@ -5,14 +5,28 @@ import { useEffect } from 'react'
 import { getById, userDetailAction } from '../../modules/user.action'
 export default function UserDetail() {
     const dispatch = useDispatch()
-    const user = useSelector(state => state.userReducer.user)
-    const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn)
-    console.log(`[Login User] ${JSON.stringify(user)}`)
-    console.log(`[Login Check] ${isLoggedIn}`)
+    // const {user, isLoggedIn}  = useSelector(state => ({
+    //     user: state.userReducer.user,
+    //     isLoggedIn: state.userReducer.isLoggedIn
+    // }), [])
+    const number = useSelector(state => (state.counterReducer.number))
+    console.log(`[Login Check] ${number}`)
+    //console.log(`[Login User] ${JSON.stringify(user)}`)
+    //console.log(`[Login Check] ${isLoggedIn}`)
     const detail = e =>{
             e.preventDefault()
             dispatch(getById())
     }
+    /*
+    useEffect(() => {
+        dispatch({
+          type: LOG_IN,
+          data: {
+            nickname: "darren",
+          },
+        });
+      }, []);*/
+
     return (<User>
         <h1>UserDetail</h1>
         <form>

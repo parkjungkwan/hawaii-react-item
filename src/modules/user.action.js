@@ -1,9 +1,9 @@
-import { goToHome } from '../context'
+import { createAction, handleActions } from 'redux-actions';
 import { userService } from './user.service'
 import { alertActions } from './alert.action'
 // Action Types
+import history from '../history'
 
-import { history } from '../context';
 export const userConstants = {
   REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
   REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
@@ -26,19 +26,34 @@ export const userConstants = {
 // let user = JSON.parse(sessionStorage.getItem("user"));
 // let users = JSON.parse(localStorage.getItem('users')) || [];
 
-
+export const loginSuccess = createAction(userConstants.LOGIN_SUCCESS);
 
 // Initial State
 
-export const initialState = { 
-    isLoggedIn: false, 
-    user: {} 
-}
+export const initialState = {number: 7}
 
+/*
+const counterReducer = handleActions(
+  {
+    [INCREASE]: (state, action) => ({ number: state.number + 1 }),
+    [DECREASE]: (state, action) => ({ number: state.number - 1 }),
+  },
+  initialState,
+)
 
-
+*/
 
 // Reducer
+const userReducer = handleActions(
+    {
+      [userConstants.LOGIN_SUCCESS]: (state, action) => { 
+          alert(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ${state.number}`)
+        return ({ number: 9 })},
+      
+    },
+    initialState,
+  )
+/*
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.REGISTER_REQUEST:
@@ -48,69 +63,63 @@ export const userReducer = (state = initialState, action) => {
     case userConstants.REGISTER_FAILURE:
         return {};
     case userConstants.LOGIN_REQUEST:
-        return {
-            isloggedIn: true,
-            user: action.user
-        };
+        return state = false
     case userConstants.LOGIN_SUCCESS:
-        console.log(` [Reducer] Login User Name is ${action.user.name}`) 
-        return {
-            ...state,
-            isloggedIn: true,
-            user: action.user
-        }
+        //console.log(` [Reducer] Login User Name is ${action.user.name}`) 
+        console.log(` [Reducer] Login User Name is >>>>>>>>>>>>>>>>>>>>`) 
+        return {test:true}
     case userConstants.LOGIN_FAILURE:
         return {};
     case userConstants.LOGOUT:
         return {};
-      case userConstants.GETALL_REQUEST:
-          return {
-              loading: true
-          };
-      case userConstants.GETALL_SUCCESS:
-          return {
-              items: action.users
-          };
-      case userConstants.GETALL_FAILURE:
-          return {
-                ...state,
-              error: action.error
-          };
-      case userConstants.DELETE_REQUEST:
-          // add 'deleting:true' property to user being deleted
-          return {
-              ...state,
-              items: state.items.map(user =>
-                  user.id === action.id
-                      ? { ...user, deleting: true }
-                      : user
-              )
-          };
-      case userConstants.DELETE_SUCCESS:
-          // remove deleted user from state
-          return {
-              items: state.items.filter(user => user.id !== action.id)
-          };
-      case userConstants.DELETE_FAILURE:
-          // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
-          return {
-              ...state,
-              items: state.items.map(user => {
-                  if (user.id === action.id) {
-                      // make copy of user without 'deleting:true' property
-                      const { deleting, ...userCopy } = user;
-                      // return copy of user with 'deleteError:[error]' property
-                      return { ...userCopy, deleteError: action.error };
-                  }
+    case userConstants.GETALL_REQUEST:
+        return {
+            loading: true
+        };
+    case userConstants.GETALL_SUCCESS:
+        return {
+            items: action.users
+        };
+    case userConstants.GETALL_FAILURE:
+        return {
+            ...state,
+            error: action.error
+        };
+    case userConstants.DELETE_REQUEST:
+        // add 'deleting:true' property to user being deleted
+        return {
+            ...state,
+            items: state.items.map(user =>
+                user.id === action.id
+                    ? { ...user, deleting: true }
+                    : user
+            )
+        };
+    case userConstants.DELETE_SUCCESS:
+        // remove deleted user from state
+        return {
+            items: state.items.filter(user => user.id !== action.id)
+        };
+    case userConstants.DELETE_FAILURE:
+        // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
+        return {
+            ...state,
+            items: state.items.map(user => {
+                if (user.id === action.id) {
+                    // make copy of user without 'deleting:true' property
+                    const { deleting, ...userCopy } = user;
+                    // return copy of user with 'deleteError:[error]' property
+                    return { ...userCopy, deleteError: action.error };
+                }
 
-                  return user;
-              })
-          };
-      default:
-          return state
+                return user;
+            })
+        };
+    default:
+        return state
   }
 }
-
+*/
 
 
 // Actions
@@ -136,7 +145,7 @@ export function login(userId, password){
                   console.log(user.name)
                   dispatch(success(user))
                   history.push('/user-detail')
-                  // window.location.reload()
+                  //window.location.reload()
 
               },
               error => {

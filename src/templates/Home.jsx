@@ -1,9 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import './table.style.css'
-import {ItemChatBot} from "../containers/item"
-import {context as c} from '../context'
+import { ChatbotContainer as Chatbot } from "../containers/item"
+import { context as c } from '../context'
 import axios from 'axios'
+
 export default function Home(props){ 
+    
     const [name, setName] = useState('')
     const [title, setTitle] = useState('')
     const test = () => {
@@ -27,6 +29,6 @@ export default function Home(props){
                <tr><td><h1>{title}</h1></td></tr>
                 <tr><td><button onClick={test}>Connection Test</button></td></tr>
             </table>   
-            <ItemChatBot/>    
+            <Chatbot/>    
             </>)
 }

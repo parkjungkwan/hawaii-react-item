@@ -8,30 +8,7 @@ export default function UserLogin(){
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-    /*
-    async e => {
-        e.preventDefault()
-        alert(userId)
-        try {
-            const req = {
-                method: c.post,
-                url: `${c.url}/api/access`,
-                data: {userId, password},
-                auth: c.auth
-            }
-            const res = await axios(req)
-            const data = JSON.parse(res.data)
-            alert(`Welcome ! ${data.name}'s connection is successful. ! `)
-            sessionStorage.setItem("sessionUser", data.name);
-            window.location.reload()
-            history.push("/home");
-        } catch (error) {
-            alert("Please check your ID or password.");
-            window.location.reload();
-        }
-    }
-    */
-
+    
     return (<>
     <h1>Signin Form</h1> <form>
     <table  className='tab_layer'>

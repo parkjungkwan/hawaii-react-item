@@ -2,7 +2,8 @@ import React,{useState} from 'react'
 import {Item} from '../../templates'
 import axios from 'axios'
 
-export default function Cabbage () {
+export default function CabbageContainer () {
+    
     const [avgTemp, setAvgTemp] = useState('')
     const [minTemp, setMinTemp] = useState('')
     const [maxTemp, setMaxTemp] = useState('')

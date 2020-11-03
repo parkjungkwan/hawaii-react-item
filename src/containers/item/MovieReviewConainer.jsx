@@ -1,10 +1,9 @@
 import React from 'react'
 import {Item} from '../../templates'
 
-const RemoveItem = () => {
+export default function MovieReviewContainer() {
     return (<Item>
 
     </Item>)
 }
 
-export default RemoveItem

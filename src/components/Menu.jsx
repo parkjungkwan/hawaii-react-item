@@ -7,6 +7,7 @@ export const UserMenu = () => (<nav>
             <li><Link to='/modifying-user-info'>Modifying User Information</Link></li>
             <li><Link to='/membership-withdrawal'>Membership Withdrawal</Link></li>
             <li><Link to='/userlist'>User List</Link></li>
+            <li><Link to='/item'>[ Item ]</Link></li>
         </ol>
     </nav>)
 
@@ -21,11 +22,11 @@ export const ArticleMenu = () =>(<nav>
 
 export const ItemMenu = () => (<nav>
     <ol>
-        <li><Link to='/item-list'>Item List</Link></li>
-        <li><Link to='/register-item'>Register Item</Link></li>
-        <li><Link to='/modify-item'>Modify Item</Link></li>
-        <li><Link to='/remove-item'>Remove Item</Link></li>
-        <li><Link to='/cabbage-price-predict'>Cabbage Price Predict</Link></li>
+        <li><Link to='/search-airport'>Airport</Link></li>
+        <li><Link to='/find-bmi'>Bmi</Link></li>
+        <li><Link to='/cabbage-price-predict'>Cabbage</Link></li>
+        <li><Link to='/chabtbot-service'>Chatbot</Link></li>
+        <li><Link to='/counter'>Counter</Link></li>
     </ol>
 </nav>)
 
@@ -35,6 +36,5 @@ export const AuthMenu = () => (<nav>
         <li><Link to='/signin-form'>Signin Form</Link></li>
     </ol>
 </nav>)
-
 
 

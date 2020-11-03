@@ -10,24 +10,23 @@ import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
 import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import history from './history';
 
-const customHistory = createBrowserHistory();
 
 const store = createStore(
   rootReducer,
-  // logger 를 사용하는 경우, logger가 가장 마지막에 와야합니다.
+  // If you use logger , the logger should be the last.
   composeWithDevTools(
     applyMiddleware(
-      ReduxThunk.withExtraArgument({ history: customHistory }),
+      ReduxThunk.withExtraArgument({ history: history }),
       logger
     )
   )
-); // 여러개의 미들웨어를 적용 할 수 있습니다.
+); // You can apply multiple middleware.
 
 
 ReactDOM.render(
-  <Router history={ customHistory }>
+  <Router history={ history }>
     <Provider store={store}>
     <App />
     </Provider>
